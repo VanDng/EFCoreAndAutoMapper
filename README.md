@@ -10,6 +10,7 @@ Given a context below:
 
 Execute a simple `SELECT` query with two different mapping methods, then observe the output.
 
+**A. EF Core version `6`, AutoMapper verion `7.0.1`**
 - Using `IMapper.Map`
   - The number of records returned: 6
   - The number of query execution: 1
@@ -19,6 +20,10 @@ Execute a simple `SELECT` query with two different mapping methods, then observe
   - The number of records returned: 6
   - The number of query execution: 1
   - The actual query: `SELECT Name, Grade FROM Student`
+
+**B. EF Core verion `3.1.22`**
+
+**TBC**
 
 # Setup
 
