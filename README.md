@@ -1,6 +1,6 @@
 # Introduction
 
-The repository is about to compare the method `IMapper.Map` and the extension `ProjectTo`.
+The repository is about to compare the output when using Entity Framework Core with the AutoMapper method `IMapper.Map` and the extension `ProjectTo`.
 
 What are they? Take a look here [IMapper.Map](https://docs.automapper.org/en/stable/Getting-started.html#how-do-i-use-automapper), [ProjectTo](https://docs.automapper.org/en/stable/Queryable-Extensions.html).
 
