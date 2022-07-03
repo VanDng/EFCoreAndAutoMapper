@@ -39,7 +39,7 @@ Given DTO definitions below:
 There're two different configurations for two comparisions.
 
 #### 1. Complex selection
-```json
+```csharp
 mapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Student, StudentDto>();
@@ -48,7 +48,7 @@ mapperConfiguration = new MapperConfiguration(cfg =>
 ```
 
 #### 2. Simple selection
-```json
+```csharp
 mapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Student, StudentDto>()
