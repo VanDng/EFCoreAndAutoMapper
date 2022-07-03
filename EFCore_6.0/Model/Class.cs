@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EFCoreWithAutoMapper
+namespace EFCore6
 {
     [Table("Class")]
     public class Class

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace EFCoreAndAutoMapper.Migrations
+namespace EFCore6.Migrations
 {
     public partial class InitDB : Migration
     {

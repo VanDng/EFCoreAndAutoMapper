@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EFCoreWithAutoMapper.Dto
+namespace EFCore6.Dto
 {
     public class StudentDto
     {
         public string Name { get; set; }
-        public double Grade { get; set; }
         public ClassDto Class { get; set; }
     }
 }

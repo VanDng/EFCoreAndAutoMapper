@@ -2,30 +2,90 @@
 
 The repository is about to compare the method `IMapper.Map` and the extension `ProjectTo`.
 
-Given a context below:
-- A database having a table named `Student` with columns `ID`, `Name`, `Grade`. A sample data of 6 records are inserted.
-- In source code, we have 
-  - an entity `Student` with properties `ID`, `Name`, and `Grade`
-  - a DTO `StudentDto` with properties `Name`, `Grade`.
+What are they? Take a look here [IMapper.Map](https://docs.automapper.org/en/stable/Getting-started.html#how-do-i-use-automapper), [ProjectTo](https://docs.automapper.org/en/stable/Queryable-Extensions.html).
 
-Execute a simple `SELECT` query with two different mapping methods, then observe the output.
+### **Database**
+Given a database below:
+- Table `Student`
+  
+  | Column | Description
+  | --- | --- |
+  | ID ||
+  | Name | Name of student |
+  | Grade | Average grade of student |
+  | ClassId | Foregin key referencing to table `Class` |
 
-**A. EF Core version `6`, AutoMapper verion `7.0.1`**
-- Using `IMapper.Map`
-  - The number of records returned: 6
-  - The number of query execution: 1
-  - The actual query: `SELECT ID, Name, Grade FROM Student`
+- Table `Class`
+  
+  | Column | Description
+  | --- | --- |
+  | ID ||
+  | Name | Name of class |
+### **DTO**
+Given DTO definitions below:
+- DTO `StudentDto`
+  | Property | Description
+  | --- | --- |
+  | Name | Name of student |
+  | Class | A reference to `ClassDto` |
 
-- Using `ProjectTo`
-  - The number of records returned: 6
-  - The number of query execution: 1
-  - The actual query: `SELECT Name, Grade FROM Student` (`ID` is not included)
+- DTO `ClassDto`
+  | Property | Description
+  | --- | --- |
+  | Name | Name of student |
 
-**B. EF Core verion `3.1.22`**
+### **Mapper Configuration**
 
-**TBC**
+There're two different configurations for two comparisions.
 
-# Setup
+#### 1. Complex selection
+```json
+mapperConfiguration = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Student, StudentDto>();
+                cfg.CreateMap<Class, ClassDto>();
+            });
+```
+
+#### 2. Simple selection
+```json
+mapperConfiguration = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Student, StudentDto>()
+                      .ForMember(dst => dst.Class, opt => opt.Ignore());
+            });
+```
+
+### **Comparison result**
+
+#### 1. Complex selection
+Execute an EF selection to query **the name of student** and **their class name** if any.
+
+| Method | SQL execution count | Generated SQL Query | Note
+| --- | --- | --- | --- |
+| Without AutoMapper | 1 |  SELECT **[student].[Name], [class].[Name]** FROM [Student] AS [student] INNER JOIN [Class] AS [class] ON [student].[ClassId] = [class].[ID] | It's a base result to evaluate other methods.
+| IMapper.Map | 1 | SELECT **[ID], [ClassId], [Grade], [Name]** FROM [Student] | - EF Core framework seems not to understand AutoMapper, it does not generate query to select the class name. <br/>- It selects more than what a DTO is defined.
+| ProjectTo | 1 |  SELECT CAST(0 AS bit), **[class].[Name], [students].[Name]** FROM [Student] AS [student] INNER JOIN [Class] AS [class] ON [student].[ClassId] = [class].[ID] | It works well as expected.
+
+#### 2. Simple selection
+Execute an EF selection to query **only the name of student**
+
+| Method | SQL execution count | Generated SQL Query | Note
+| --- | --- | --- | --- |
+| Without AutoMapper | 1 |  SELECT **[Name]** FROM [Student] | It's a base result to evaluate other methods.
+| IMapper.Map | 1 |  SELECT **[ID], [ClassId], [Grade], [Name]** FROM [Student] | It selects more than what a DTO is defined.
+| ProjectTo | 1 |  SELECT **[Name]** FROM [Student] | It works well as expected.
+
+# Conclusion
+
+- AutoMapper does not make EF Core to generate multiple unnecessary queries as we, sometimes, think. There's only one execution in all test cases.
+- `IMapper.Map` generates uneffective queries in all test cases.
+- `ProjectTo` produces expected results in all test cases.
+- **Did I wrongly configure the mapper configuration so that `IMapper.Map` did not work properly?**
+
+# Configuration
+
+There're steps to quickly run the comparison.
 
 - Create a database named `Student` on a SQL Server instance.
 - Prepare a text file `connectionstring.txt` containing the database above, then put it in folder `EFCoreAndAutoMapper`
