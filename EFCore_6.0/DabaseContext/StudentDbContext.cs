@@ -12,6 +12,8 @@ namespace EFCoreWithAutoMapper
     {
         public DbSet<Student> Students { get; set; }
 
+        public DbSet<Class> Classes { get; set; }
+
         public StudentDbContext(DbContextOptions<StudentDbContext> options) : base(options)
         {
         }

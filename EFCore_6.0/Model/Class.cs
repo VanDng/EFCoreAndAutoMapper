@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace EFCoreWithAutoMapper
 {
-    [Table("Student")]
-    public class Student
+    [Table("Class")]
+    public class Class
     {
         [Key]
         public int ID { get; set; }
         public string Name { get; set; }
-        public double Grade { get; set; }
+        public IEnumerable<Student> Students { get; set; }
     }
 }

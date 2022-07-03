@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace EFCoreWithAutoMapper.Migrations
+namespace EFCoreAndAutoMapper.Migrations
 {
     [DbContext(typeof(StudentDbContext))]
-    [Migration("20220626092209_InitializeDatabase")]
-    partial class InitializeDatabase
+    [Migration("20220703015545_InitDB")]
+    partial class InitDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,22 @@ namespace EFCoreWithAutoMapper.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("EFCoreWithAutoMapper.Class", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Class");
+                });
+
             modelBuilder.Entity("EFCoreWithAutoMapper.Student", b =>
                 {
                     b.Property<int>("ID")
@@ -30,6 +46,9 @@ namespace EFCoreWithAutoMapper.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<int>("ClassId")
+                        .HasColumnType("int");
 
                     b.Property<double>("Grade")
                         .HasColumnType("float");
@@ -39,7 +58,25 @@ namespace EFCoreWithAutoMapper.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("ClassId");
+
                     b.ToTable("Student");
+                });
+
+            modelBuilder.Entity("EFCoreWithAutoMapper.Student", b =>
+                {
+                    b.HasOne("EFCoreWithAutoMapper.Class", "Class")
+                        .WithMany("Students")
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Class");
+                });
+
+            modelBuilder.Entity("EFCoreWithAutoMapper.Class", b =>
+                {
+                    b.Navigation("Students");
                 });
 #pragma warning restore 612, 618
         }

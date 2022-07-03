@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace EFCoreWithAutoMapper.Dto
 {
-    public class StudentDto
+    public class ClassDto
     {
         public string Name { get; set; }
-        public double Grade { get; set; }
     }
 }

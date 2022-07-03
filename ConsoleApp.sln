@@ -5,7 +5,7 @@ VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonConfig", "CommonConfig\CommonConfig.csproj", "{F4711D21-7DB3-4418-8D00-918EA8D5BBEC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCoreWithAutoMapper", "EFCoreAndAutoMapper\EFCoreAndAutoMapper.csproj", "{54399549-89D0-43ED-BA52-0D64AC2EFBB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCore_6.0", "EFCore_6.0\EFCore_6.0.csproj", "{54399549-89D0-43ED-BA52-0D64AC2EFBB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
