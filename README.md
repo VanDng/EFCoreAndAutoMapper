@@ -79,9 +79,8 @@ Execute an EF selection to query **only the name of student**
 # Conclusion
 
 - AutoMapper does not make EF Core to generate multiple unnecessary queries as we, sometimes, think. There's only one execution in all test cases.
-- `IMapper.Map` generates uneffective queries in all test cases.
+- `IMapper.Map` generates uneffective queries in all test cases. It turns out that I used `IMapper.Map` in the wrong way!. `IMapper.Map` is not for dealing with Queryable sources such as Entity Framework. [There was a guy making the same mistake.](https://github.com/AutoMapper/AutoMapper/discussions/3779)
 - `ProjectTo` produces expected results in all test cases.
-- **Did I wrongly configure the mapper configuration so that `IMapper.Map` did not work properly?**
 
 # Configuration
 
