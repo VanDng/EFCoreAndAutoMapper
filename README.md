@@ -124,7 +124,7 @@ Execute an EF selection to query **only the name of student**
 
 # Conclusion
 
-- According to available test cases, AutoMapper does not cause multiple SQL connections/queries for each selection.
+- According to available test cases, AutoMapper does not cause multiple SQL connections/queries for each selection although there're multiple data rows queried.
 - `IMapper.Map` generates uneffective queries (EF 3.1) and lack-of-data queries (EF 6) in the test cases. It turns out that mixing `IMapper.Map` with EF is a wrong practice. `IMapper.Map` is not designed for dealing with Queryable sources such as Entity Framework. [There's a guy seeming to make the same mistake.](https://github.com/AutoMapper/AutoMapper/discussions/3779)
 - `ProjectTo` produces expected results in all the test cases. It's the right tool when working with EF. Check it out [here](https://docs.automapper.org/en/stable/Queryable-Extensions.html).
 
