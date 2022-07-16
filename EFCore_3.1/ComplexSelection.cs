@@ -61,11 +61,7 @@ namespace EFCore3
             {
                 return db.Set<Student>()
                             .Include(s => s.Class)
-
-                            // Hmm. Related classes are not fetched. IAutoMapper.Map() does not work this case. The Class reference is always null.
-                            // Probably, I need a special configuration for this kind of relationship?
                             .Select(student => mapper.Map<StudentDto>(student))
-
                             .ToList();
             }
         }
